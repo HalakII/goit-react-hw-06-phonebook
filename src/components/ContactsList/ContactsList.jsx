@@ -1,7 +1,24 @@
 import { ContactsListItem } from 'components/ContactsListItem/ContactsListItem';
 import css from './ContactsList.module.css';
-export const ContactsList = ({ filteredContacts, onDeleteContact }) => {
-  console.log(filteredContacts.id);
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from '../../redux/selectors';
+import { deleteContact } from '../../redux/contactsSlice';
+
+export const ContactsList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const getfilterContacts = () => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
+  const handleDelete = id => dispatch(deleteContact(id));
+
+  const filteredContacts = getfilterContacts();
   return (
     <ul className={css.contactList}>
       {filteredContacts.map(({ id, name, number }) => (
@@ -10,7 +27,7 @@ export const ContactsList = ({ filteredContacts, onDeleteContact }) => {
           id={id}
           name={name}
           number={number}
-          onDeleteContact={onDeleteContact}
+          onDeleteContact={handleDelete}
         />
       ))}
     </ul>
