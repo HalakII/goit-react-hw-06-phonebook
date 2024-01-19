@@ -1,33 +1,22 @@
 import { ContactsListItem } from 'components/ContactsListItem/ContactsListItem';
 import css from './ContactsList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from '../../redux/selectors';
+
 import { deleteContact } from '../../redux/contactsSlice';
+import { getContacts, getFilter } from '../../redux/selectors';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
+  console.log(filter);
 
   const getfilterContacts = () => {
-    // Перевірка, чи contacts - масив
-    if (!Array.isArray(contacts)) {
-      console.error('Contacts is not an array:', contacts);
-      return [];
-    }
-
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
-  // const getfilterContacts = () => {
-  //   const normalizedFilter = filter.toLowerCase();
-  //   return contacts.filter(contact =>
-  //     contact.name.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
 
   const handleDelete = id => dispatch(deleteContact(id));
 

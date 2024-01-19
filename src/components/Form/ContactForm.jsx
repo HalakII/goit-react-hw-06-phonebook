@@ -34,11 +34,11 @@ export const ContactForm = () => {
     );
     if (contactExists) {
       NotificationManager.info(`${name} is already in contacts.`);
-    } else {
-      dispatch(addContact(name, number));
-      setName('');
-      setNumber('');
+      return;
     }
+    dispatch(addContact(name, number));
+    setName('');
+    setNumber('');
   };
 
   return (
