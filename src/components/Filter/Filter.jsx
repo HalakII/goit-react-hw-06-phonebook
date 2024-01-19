@@ -6,7 +6,6 @@ import { setFilter } from '../../redux/filterSlice';
 export const ContactsFilter = () => {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-  console.log(filter);
 
   const handleChangeFilter = event => {
     const value = event.currentTarget.value.toLowerCase();

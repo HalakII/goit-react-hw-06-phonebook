@@ -10,11 +10,24 @@ export const ContactsList = () => {
   const filter = useSelector(getFilter);
 
   const getfilterContacts = () => {
+    // Перевірка, чи contacts - масив
+    if (!Array.isArray(contacts)) {
+      console.error('Contacts is not an array:', contacts);
+      return [];
+    }
+
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+
+  // const getfilterContacts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
 
   const handleDelete = id => dispatch(deleteContact(id));
 
